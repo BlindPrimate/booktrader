@@ -1,0 +1,28 @@
+h1 Search for your book title
+form(name="newBookSearch")
+  input.form-control(placeholder="Search" ng-model = "search.term" ng-model-options="{debounce: 2500}")
+  ul.list-group
+    li.list-group-item(ng-repeat="result in search.results")
+      img(src="{{result.volumeInfo.imageLinks.thumbnail}}")
+      p {{result.volumeInfo.title}}
+      p 
+        span(ng-repeat="author in result.volumeInfo.authors") {{author}}{{$last? '' : ', '}}
+      p Published: {{result.volumeInfo.publishedDate | date: 'yyyy'}}
+      p 
+        span(ng-repeat="category in result.volumeInfo.categories") {{category}} {{$last? '' : ', '}}
+      p(ng-repeat="isbn in result.volumeInfo.industryIdentifiers") {{isbn.identifier}} 
+      button.btn.btn-default(ng-click="addBook(result)") Add Book
+
+p or
+h1 Enter your book info
+form(name="newbook")
+  div.input-group
+    label Title
+      input.form-control(type="text" ng-model="book.title")
+    label ISBN
+      input.form-control(type="text" ng-model="book.isbn")
+    label Genre
+      input.form-control(type="text" ng-model="book.genre")
+    button.btn.btn-success(type="submit") Add Book
+    button.btn.btn-danger(type="submit") Cancel
+
