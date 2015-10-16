@@ -9,6 +9,9 @@ angular.module('bookbrokerApp')
 
     // Public API here
     return {
+      searchBooks: function (searchTerm) {
+        return $http.get(url + 'search/' + searchTerm);
+      },
       getBooks: function () {
         return $http.get(url);
       },

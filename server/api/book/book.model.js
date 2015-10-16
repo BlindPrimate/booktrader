@@ -9,6 +9,7 @@ var BookSchema = new Schema({
   datePublished: Date,
   categories: Array,
   isbn: Array,
+  googleId: String
 });
 
 module.exports = mongoose.model('Book', BookSchema);

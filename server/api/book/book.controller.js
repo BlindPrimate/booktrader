@@ -2,6 +2,8 @@
 
 var _ = require('lodash');
 var Book = require('./book.model');
+var request = require('request');
+var async = require('async');
 
 // Get list of books
 exports.index = function(req, res) {
@@ -19,6 +21,32 @@ exports.show = function(req, res) {
     return res.json(book);
   });
 };
+
+
+// search for books on google api and compile with local database
+exports.search = function (req,res) {
+  request.get({
+    url: 'https://www.googleapis.com/books/v1/volumes?q=' + req.params.term,
+    json: true
+  }, function (error, response, body) {
+    var books = _.map(body.items, function (item) {
+      var book = item.volumeInfo;
+      book.googleId = item.id;
+      return book;
+    });
+
+    async.map(books, function (book, callback) {
+      Book.findOne({googleId: book.googleId}, function (err, result) {
+        if (result) {
+          book._id = result._id;
+        }
+        callback(err, book);
+      });
+    }, function (err, results) {
+      return res.status(201).json(results);
+    });
+  });
+}
 
 // Creates a new book in the DB.
 exports.create = function(req, res) {
@@ -41,6 +69,7 @@ exports.update = function(req, res) {
     });
   });
 };
+
 
 // Deletes a book from the DB.
 exports.destroy = function(req, res) {

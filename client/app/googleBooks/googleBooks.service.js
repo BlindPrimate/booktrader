@@ -5,7 +5,7 @@ angular.module('bookbrokerApp')
     // Service logic
     // ...
 
-    var bookSearchUrl = 'https://www.googleapis.com/books/v1/volumes?q='
+    var bookSearchUrl = '/api/books/search/'
 
     // Public API here
     return {

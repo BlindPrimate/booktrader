@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('bookbrokerApp')
-  .directive('newBook', function (googleBooks) {
+  .directive('newBook', function (bookFactory) {
     return {
       templateUrl: 'app/newBook/newBook.html',
       restrict: 'E',
@@ -19,20 +19,22 @@ angular.module('bookbrokerApp')
         }
 
         $scope.$watch('search.term', function () {
-          googleBooks.bookSearch('good omens').then(function (searchResult) {
-            $scope.search.results = searchResult.data.items;
+          bookFactory.searchBooks('good omens').then(function (searchResult) {
+            $scope.search.results = searchResult.data;
           });
         });
 
 
         $scope.addBook = function (bookObj) {
           var book = {
-            title: bookObj.volumeInfo.title,
-            authors: bookObj.volumeInfo.authors,
-            categories: bookObj.volumeInfo.categories,
-            datePublished: bookObj.volumeInfo.publishedDate,
-            isbn: bookObj.volumeInfo.industryIdentifiers
+            title: bookObj.title,
+            authors: bookObj.authors,
+            categories: bookObj.categories,
+            datePublished: bookObj.publishedDate,
+            isbn: bookObj.industryIdentifiers,
+            googleId: bookObj.googleId
           }
+
           bookFactory.saveBook(book).then(function () {
             
           }, function () {
