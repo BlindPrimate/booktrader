@@ -4,6 +4,7 @@ var User = require('./user.model');
 var passport = require('passport');
 var config = require('../../config/environment');
 var jwt = require('jsonwebtoken');
+var _ = require('lodash');
 
 var validationError = function(res, err) {
   return res.status(422).json(err);
@@ -33,6 +34,30 @@ exports.create = function (req, res, next) {
     res.json({ token: token });
   });
 };
+
+/**
+ * Adds new book to user's bookshelf
+ */
+exports.addBookToShelf = function (req, res, next) {
+  User.findOne({_id: req.user._id},
+                {"bookshelf": 1}, function (err, user) {
+    if (err) return next(err);
+    user.bookshelf.push(req.body);
+    user.save();
+    res.status(200).json(req.body);
+  });
+};
+
+/**
+ * Get current user's bookshelf
+ */
+exports.getBookshelf = function (req, res) {
+  User.findOne({_id: req.user._id},
+                {"bookshelf": 1, _id: 0}, function (err, user) {
+    if (err) return next(err);
+    res.status(200).json(user.bookshelf);
+  });
+}
 
 /**
  * Get a single user

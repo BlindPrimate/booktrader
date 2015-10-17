@@ -2,6 +2,7 @@
 
 var _ = require('lodash');
 var Book = require('./book.model');
+var User = require('../user/user.model');
 var request = require('request');
 var async = require('async');
 
@@ -36,9 +37,14 @@ exports.search = function (req,res) {
     });
 
     async.map(books, function (book, callback) {
-      Book.findOne({googleId: book.googleId}, function (err, result) {
-        if (result) {
-          book._id = result._id;
+      User.findOne({
+        _id: req.user._id,
+        "bookshelf.googleId" : book.googleId
+      }, function (err, user) {
+        if (user) {
+          book.onShelf = true;
+        } else {
+          book.onShelf = false;
         }
         callback(err, book);
       });

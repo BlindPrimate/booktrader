@@ -6,12 +6,7 @@ angular.module('bookbrokerApp')
       templateUrl: 'app/newBook/newBook.html',
       restrict: 'E',
       scope: {},
-      controller: function ($scope, bookFactory) {
-        $scope.book = {
-          title: '',
-          category: '',
-          isbn: '',
-        }
+      controller: function ($scope, bookFactory, $q) {
 
         $scope.search = {
           term: '',
@@ -36,13 +31,11 @@ angular.module('bookbrokerApp')
           }
 
           bookFactory.saveBook(book).then(function () {
-            
+            bookObj.onShelf = true;
           }, function () {
 
           });
         }
-
-
       },
       link: function (scope, element, attrs) {
 

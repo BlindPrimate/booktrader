@@ -2,6 +2,7 @@ h1 Search for your book title
 form(name="newBookSearch")
   input.form-control(placeholder="Search" ng-model = "search.term" ng-model-options="{debounce: 2500}")
   ul.list-group
+    //-p {{search.results}}
     li.list-group-item(ng-repeat="result in search.results")
       img(src="{{result.imageLinks.thumbnail}}")
       p {{result.title}}
@@ -12,20 +13,8 @@ form(name="newBookSearch")
         span(ng-repeat="category in result.categories") {{category}} {{$last? '' : ', '}}
       p
         span(ng-repeat="isbn in result.industryIdentifiers") ISBN: {{isbn.identifier}} 
-      button.btn.btn-default(ng-click="addBook(result)" ng-disabled="result._id")
-        span(ng-if="result._id") On shelf
-        span(ng-if="!result._id") Add Book
+      button.btn.btn-default(ng-click="addBook(result)" ng-disabled="result.onShelf")
+        span(ng-if="!result.onShelf") Add Book
+        span(ng-if="result.onShelf") On Shelf
 
-p or
-h1 Enter your book info
-form(name="newbook")
-  div.input-group
-    label Title
-      input.form-control(type="text" ng-model="book.title")
-    label ISBN
-      input.form-control(type="text" ng-model="book.isbn")
-    label Genre
-      input.form-control(type="text" ng-model="book.genre")
-    button.btn.btn-success(type="submit") Add Book
-    button.btn.btn-danger(type="submit") Cancel
 
