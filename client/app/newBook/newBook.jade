@@ -2,7 +2,6 @@ h1 Search for your book title
 form(name="newBookSearch")
   input.form-control(placeholder="Search" ng-model = "search.term" ng-model-options="{debounce: 2500}")
   ul.list-group
-    //-p {{search.results}}
     li.list-group-item(ng-repeat="result in search.results")
       img(src="{{result.imageLinks.thumbnail}}")
       p {{result.title}}

@@ -71,7 +71,9 @@ User.find({}).remove(function() {
                   "identifier" : "0061991120"
                 }
               ],
-              "googleId" : "-o-2KpQlFNsC"
+              "googleId" : "-o-2KpQlFNsC",
+              "thumbnail" : "http://books.google.com/books/content?id=-o-2KpQlFNsC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
+
             }
         ]
   }, {

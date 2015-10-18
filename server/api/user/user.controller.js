@@ -39,14 +39,37 @@ exports.create = function (req, res, next) {
  * Adds new book to user's bookshelf
  */
 exports.addBookToShelf = function (req, res, next) {
-  User.findOne({_id: req.user._id},
-                {"bookshelf": 1}, function (err, user) {
+  User.update({
+    _id: req.user._id
+  }, {
+    $push: {
+      "bookshelf": req.body
+    }
+  }, function (err, user) {
     if (err) return next(err);
-    user.bookshelf.push(req.body);
-    user.save();
     res.status(200).json(req.body);
   });
 };
+
+
+/**
+ * Removes book from user's bookshelf
+ */
+
+exports.removeBookFromShelf = function (req, res) {
+  User.update({
+    _id: req.user._id 
+  }, {
+    $pull: {
+      "bookshelf" : {
+        googleId: req.params.id
+      }   
+    }
+  }, function (err, user) {
+    res.status(200).json(req.body);
+  });
+};
+
 
 /**
  * Get current user's bookshelf

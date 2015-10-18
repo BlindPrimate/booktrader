@@ -7,7 +7,7 @@ angular.module('bookbrokerApp')
 
     var user = Auth.getCurrentUser();
     var url = '/api/books/'
-    var userUrl = '/api/users/'
+    var bookshelfUrl = '/api/users/bookshelf/'
 
     // Public API here
     return {
@@ -17,17 +17,14 @@ angular.module('bookbrokerApp')
       getBooks: function () {
         return $http.get(url);
       },
-      getBook: function (bookId) {
-        return $http.get(url + bookId);
-      },
       saveBook: function (newBook) {
-        return $http.patch(userUrl + user._id + '/bookshelf',  newBook);
+        return $http.patch(bookshelfUrl,  newBook);
       },
-      deleteBook: function (bookId) {
-        return $http.delete(url + bookId);
+      removeBook: function (bookId) {
+        return $http.delete(bookshelfUrl + bookId);
       },
       getUserBookshelf: function () {
-        return $http.get(userUrl + user._id + '/bookshelf');
+        return $http.get(bookshelfUrl);
       }
     };
   });

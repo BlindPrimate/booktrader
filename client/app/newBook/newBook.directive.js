@@ -7,10 +7,11 @@ angular.module('bookbrokerApp')
       restrict: 'E',
       scope: {},
       controller: function ($scope, bookFactory, $q) {
-
-        $scope.search = {
-          term: '',
-          results: []
+        var init = function () {
+          $scope.search = {
+            term: '',
+            results: []
+          }
         }
 
         $scope.$watch('search.term', function () {
@@ -27,7 +28,8 @@ angular.module('bookbrokerApp')
             categories: bookObj.categories,
             datePublished: bookObj.publishedDate,
             isbn: bookObj.industryIdentifiers,
-            googleId: bookObj.googleId
+            googleId: bookObj.googleId,
+            thumbnail: bookObj.imageLinks.thumbnail
           }
 
           bookFactory.saveBook(book).then(function () {
@@ -36,6 +38,8 @@ angular.module('bookbrokerApp')
 
           });
         }
+
+        init();
       },
       link: function (scope, element, attrs) {
 

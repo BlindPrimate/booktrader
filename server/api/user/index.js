@@ -11,8 +11,9 @@ router.get('/', auth.hasRole('admin'), controller.index);
 router.delete('/:id', auth.hasRole('admin'), controller.destroy);
 router.get('/me', auth.isAuthenticated(), controller.me);
 router.put('/:id/password', auth.isAuthenticated(), controller.changePassword);
-router.get('/:id/bookshelf/', auth.isAuthenticated(), controller.getBookshelf);
-router.patch('/:id/bookshelf/', auth.isAuthenticated(), controller.addBookToShelf);
+router.get('/bookshelf/', auth.isAuthenticated(), controller.getBookshelf);
+router.patch('/bookshelf/', auth.isAuthenticated(), controller.addBookToShelf);
+router.delete('/bookshelf/:id', auth.isAuthenticated(), controller.removeBookFromShelf);
 router.get('/:id', auth.isAuthenticated(), controller.show);
 router.post('/', controller.create);
 
