@@ -14,6 +14,14 @@ exports.index = function(req, res) {
   });
 };
 
+// Get list of books
+exports.trades = function(req, res) {
+  Book.find({forTrade: true}, function (err, books) {
+    if(err) { return handleError(res, err); }
+    return res.status(200).json(books);
+  });
+};
+
 // Get a single book
 exports.show = function(req, res) {
   Book.findById(req.params.id, function (err, book) {
@@ -37,9 +45,9 @@ exports.search = function (req,res) {
     });
 
     async.map(books, function (book, callback) {
-      User.findOne({
-        _id: req.user._id,
-        "bookshelf.googleId" : book.googleId
+      Book.findOne({
+        owner_id: req.user.id,
+        googleId: book.googleId
       }, function (err, user) {
         if (user) {
           book.onShelf = true;
@@ -54,8 +62,17 @@ exports.search = function (req,res) {
   });
 }
 
+
+exports.bookshelf = function (req, res) {
+  Book.find({owner_id: req.user.id}, function (err, shelf) {
+    if(err) { return handleError(res, err); }
+    return res.status(201).json(shelf);
+  });
+}
+
 // Creates a new book in the DB.
 exports.create = function(req, res) {
+  req.body.owner_id = req.user.id;
   Book.create(req.body, function(err, book) {
     if(err) { return handleError(res, err); }
     return res.status(201).json(book);

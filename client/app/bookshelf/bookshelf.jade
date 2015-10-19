@@ -1,5 +1,6 @@
 h1 My Bookshelf
 div.row
+  h2(ng-hide="bookshelf.length") Your bookshelf is empty.  Shame on you!
   div.book(ng-repeat="book in bookshelf")
     img(src="{{book.thumbnail}}")
     //-p {{book.title}}
@@ -12,7 +13,8 @@ div.row
       //-span(ng-repeat="isbn in book.industryIdentifiers") ISBN: {{isbn.identifier}} 
     button.remove-book.btn.btn-default(ng-click="removeBook(book)")
       i.fa.fa-times
-    button.btn.btn-success(ng-click="tradeBook(book)") Trade
+    button.btn.btn-success(ng-click="tradeBook(book)" ng-show="!book.forTrade") Trade
+    button.btn.btn-default(ng-click="cancelTrade(book)" ng-show="book.forTrade") Cancel Trade
     //-button.btn.btn-default(ng-click="addBook(result)" ng-disabled="result.onShelf")
       //-span(ng-if="!result.onShelf") Add Book
       //-span(ng-if="result.onShelf") On Shelf

@@ -35,41 +35,8 @@ exports.create = function (req, res, next) {
   });
 };
 
-/**
- * Adds new book to user's bookshelf
- */
-exports.addBookToShelf = function (req, res, next) {
-  User.findOne({_id: req.user._id},function (err, user) {
-    user.bookshelf.push(req.body);
-    user.save();
-    res.status(200).json(req.body);
-  });
-};
 
 
-/**
- * Removes book from user's bookshelf
- */
-
-exports.removeBookFromShelf = function (req, res) {
-  User.findOne({_id: req.user.id}, function (err, user) {
-    user.bookshelf.pull({_id: req.params.id});
-    user.save();
-    res.status(200).json(user.bookshelf);
-  });
-};
-
-
-/**
- * Get current user's bookshelf
- */
-exports.getBookshelf = function (req, res) {
-  User.findOne({_id: req.user._id},
-                {"bookshelf": 1, _id: 0}, function (err, user) {
-    if (err) return next(err);
-    res.status(200).json(user.bookshelf);
-  });
-}
 
 /**
  * Get a single user

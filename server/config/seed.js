@@ -7,6 +7,7 @@
 
 var Thing = require('../api/thing/thing.model');
 var User = require('../api/user/user.model');
+var Book = require('../api/book/book.model');
 
 Thing.find({}).remove(function() {
   Thing.create({
@@ -30,59 +31,37 @@ Thing.find({}).remove(function() {
   });
 });
 
+
+Book.find({}).remove(function () {
+
+});
+
+
+
 User.find({}).remove(function() {
   User.create({
     provider: 'local',
     name: 'Test User',
     email: 'test@test.com',
     password: 'test',
-    bookshelf: []
   }, {
     provider: 'local',
     role: 'admin',
     name: 'Admin',
     email: 'admin@admin.com',
     password: 'admin',
-    bookshelf: []
   }, {
     provider: 'local',
     role: 'Test User',
     name: 'User A',
     email: 'userA@test.com',
     password: 'userA',
-    bookshelf: [
-              {
-              title : "Good Omens",
-              authors : [
-                "Neil Gaiman",
-                "Terry Pratchett"
-              ],
-              categories : [
-                "Fiction"
-              ],
-              datePublished : "2011-06-28",
-              isbn : [
-                {
-                  type : "ISBN_13",
-                  identifier : "9780061991127"
-                },
-                {
-                  type : "ISBN_10",
-                  identifier : "0061991120"
-                }
-              ],
-              googleId : "-o-2KpQlFNsC",
-              thumbnail : "http://books.google.com/books/content?id=-o-2KpQlFNsC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
-
-            }
-        ]
   }, {
     provider: 'local',
     role: 'Test User',
     name: 'User B',
     email: 'userB@test.com',
     password: 'userB',
-    bookshelf: []
   }, function() {
       console.log('finished populating users');
     }

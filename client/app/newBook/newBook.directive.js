@@ -6,7 +6,7 @@ angular.module('bookbrokerApp')
       templateUrl: 'app/newBook/newBook.html',
       restrict: 'E',
       scope: {},
-      controller: function ($scope, bookFactory, $q) {
+      controller: function ($scope, bookFactory) {
         var init = function () {
           $scope.search = {
             term: '',
@@ -29,7 +29,8 @@ angular.module('bookbrokerApp')
             datePublished: bookObj.publishedDate,
             isbn: bookObj.industryIdentifiers,
             googleId: bookObj.googleId,
-            thumbnail: bookObj.imageLinks.thumbnail
+            thumbnail: bookObj.imageLinks.thumbnail,
+            forTrade: false
           }
 
           bookFactory.saveBook(book).then(function () {
