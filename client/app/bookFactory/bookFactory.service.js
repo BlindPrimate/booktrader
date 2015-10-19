@@ -6,16 +6,14 @@ angular.module('bookbrokerApp')
     // ...
 
     var user = Auth.getCurrentUser();
-    var url = '/api/books/'
     var bookshelfUrl = '/api/users/bookshelf/'
+    var tradeUrl = '/api/trades/'
+    var searchUrl = '/api/books/search/';
 
     // Public API here
     return {
       searchBooks: function (searchTerm) {
-        return $http.get(url + 'search/' + searchTerm);
-      },
-      getBooks: function () {
-        return $http.get(url);
+        return $http.get(searchUrl + searchTerm);
       },
       saveBook: function (newBook) {
         return $http.patch(bookshelfUrl,  newBook);
@@ -25,6 +23,9 @@ angular.module('bookbrokerApp')
       },
       getUserBookshelf: function () {
         return $http.get(bookshelfUrl);
+      },
+      tradeBook: function (book) {
+        return $http.post(tradeUrl, book)
       }
     };
   });

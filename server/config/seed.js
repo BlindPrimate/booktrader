@@ -52,27 +52,27 @@ User.find({}).remove(function() {
     password: 'userA',
     bookshelf: [
               {
-              "title" : "Good Omens",
-              "authors" : [
+              title : "Good Omens",
+              authors : [
                 "Neil Gaiman",
                 "Terry Pratchett"
               ],
-              "categories" : [
+              categories : [
                 "Fiction"
               ],
-              "datePublished" : "2011-06-28",
-              "isbn" : [
+              datePublished : "2011-06-28",
+              isbn : [
                 {
-                  "type" : "ISBN_13",
-                  "identifier" : "9780061991127"
+                  type : "ISBN_13",
+                  identifier : "9780061991127"
                 },
                 {
-                  "type" : "ISBN_10",
-                  "identifier" : "0061991120"
+                  type : "ISBN_10",
+                  identifier : "0061991120"
                 }
               ],
-              "googleId" : "-o-2KpQlFNsC",
-              "thumbnail" : "http://books.google.com/books/content?id=-o-2KpQlFNsC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
+              googleId : "-o-2KpQlFNsC",
+              thumbnail : "http://books.google.com/books/content?id=-o-2KpQlFNsC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
 
             }
         ]

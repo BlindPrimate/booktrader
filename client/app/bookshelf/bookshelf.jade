@@ -12,6 +12,7 @@ div.row
       //-span(ng-repeat="isbn in book.industryIdentifiers") ISBN: {{isbn.identifier}} 
     button.remove-book.btn.btn-default(ng-click="removeBook(book)")
       i.fa.fa-times
+    button.btn.btn-success(ng-click="tradeBook(book)") Trade
     //-button.btn.btn-default(ng-click="addBook(result)" ng-disabled="result.onShelf")
       //-span(ng-if="!result.onShelf") Add Book
       //-span(ng-if="result.onShelf") On Shelf

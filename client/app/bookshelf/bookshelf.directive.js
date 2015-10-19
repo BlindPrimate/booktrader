@@ -12,8 +12,8 @@ angular.module('bookbrokerApp')
         }
 
         $scope.removeBook = function (bookObj) {
-          bookFactory.removeBook(bookObj.googleId).then(function (book) {
-            $scope.bookshelf.splice($scope.bookshelf.indexOf(bookObj), 1);
+          bookFactory.removeBook(bookObj._id).then(function (books) {
+            $scope.bookshelf = books.data;
           });
         }
 

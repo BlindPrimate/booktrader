@@ -39,14 +39,9 @@ exports.create = function (req, res, next) {
  * Adds new book to user's bookshelf
  */
 exports.addBookToShelf = function (req, res, next) {
-  User.update({
-    _id: req.user._id
-  }, {
-    $push: {
-      "bookshelf": req.body
-    }
-  }, function (err, user) {
-    if (err) return next(err);
+  User.findOne({_id: req.user._id},function (err, user) {
+    user.bookshelf.push(req.body);
+    user.save();
     res.status(200).json(req.body);
   });
 };
@@ -57,16 +52,10 @@ exports.addBookToShelf = function (req, res, next) {
  */
 
 exports.removeBookFromShelf = function (req, res) {
-  User.update({
-    _id: req.user._id 
-  }, {
-    $pull: {
-      "bookshelf" : {
-        googleId: req.params.id
-      }   
-    }
-  }, function (err, user) {
-    res.status(200).json(req.body);
+  User.findOne({_id: req.user.id}, function (err, user) {
+    user.bookshelf.pull({_id: req.params.id});
+    user.save();
+    res.status(200).json(user.bookshelf);
   });
 };
 

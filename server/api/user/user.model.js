@@ -5,6 +5,19 @@ var Schema = mongoose.Schema;
 var crypto = require('crypto');
 var authTypes = ['github', 'twitter', 'facebook', 'google'];
 
+
+var bookshelfSchema = new Schema({
+  title : String,
+  authors : Array,
+  thumbnail : String,
+  googleId : String,
+  isbn : Array,
+  datePublished : Date,
+  categories : Array
+});
+
+
+
 var UserSchema = new Schema({
   name: String,
   email: { type: String, lowercase: true },
@@ -12,7 +25,7 @@ var UserSchema = new Schema({
     type: String,
     default: 'user'
   },
-  bookshelf: Array,
+  bookshelf: [bookshelfSchema],
   hashedPassword: String,
   provider: String,
   salt: String,
@@ -21,6 +34,8 @@ var UserSchema = new Schema({
   google: {},
   github: {}
 });
+
+
 
 /**
  * Virtuals
