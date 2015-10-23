@@ -2,7 +2,7 @@ h1 My Bookshelf
 div.row
   h2(ng-hide="bookshelf.length") Your bookshelf is empty.  Shame on you!
   div.book(ng-repeat="book in bookshelf")
-    img(src="{{book.thumbnail}}")
+    img(src="{{book.thumbnail}}" ng-click="openBook(book)")
     //-p {{book.title}}
     //-p 
       //-span(ng-repeat="author in book.authors") {{author}}{{$last? '' : ', '}}
@@ -11,11 +11,8 @@ div.row
       //-span(ng-repeat="category in book.categories") {{category}} {{$last? '' : ', '}}
     //-p
       //-span(ng-repeat="isbn in book.industryIdentifiers") ISBN: {{isbn.identifier}} 
-    button.remove-book.btn.btn-default(ng-click="removeBook(book)")
+    button.remove-book.btn.btn-default(ng-click="removeBook(book.title, book)")
       i.fa.fa-times
-    button.btn.btn-success(ng-click="tradeBook(book)" ng-show="!book.forTrade") Trade
-    button.btn.btn-default(ng-click="cancelTrade(book)" ng-show="book.forTrade") Cancel Trade
-    button.btn.btn-default(ng-click="openBook(book)") Test
-    //-button.btn.btn-default(ng-click="addBook(result)" ng-disabled="result.onShelf")
-      //-span(ng-if="!result.onShelf") Add Book
-      //-span(ng-if="result.onShelf") On Shelf
+    div.trade-buttons
+      button.btn.btn-success.btn-trade(ng-click="tradeBook(book)" ng-show="!book.forTrade") Trade
+      button.btn.btn-default.btn-trade(ng-click="cancelTrade(book)" ng-show="book.forTrade") Cancel Trade

@@ -11,11 +11,11 @@ angular.module('bookbrokerApp')
           $scope.bookhself = [];
         }
 
-        $scope.removeBook = function (book) {
+        $scope.removeBook = Modal.confirm.delete(function(book) {
           bookFactory.removeBook(book._id).then(function () {
             $scope.bookshelf.splice($scope.bookshelf.indexOf(book), 1);
           });
-        }
+        });
 
         $scope.tradeBook = function (book) {
           bookFactory.tradeBook(book._id).then(function (results) {

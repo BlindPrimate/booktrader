@@ -11,6 +11,8 @@ div.row
       //-span(ng-repeat="category in book.categories") {{category}} {{$last? '' : ', '}}
     //-p
       //-span(ng-repeat="isbn in book.industryIdentifiers") ISBN: {{isbn.identifier}} 
-    button.btn.btn-success(ng-click="requestTrade(book)") Request Trade
-    button.remove-book.btn.btn-default(ng-click="cancelTrade(book)", ng-if="isBookOwner(book)") Cancel Trade
+    div.trade-buttons 
+      button.btn.btn-success.btn-trade(ng-click="requestTrade(book)" ng-if="!isBookOwner(book)")
+        i.fa.fa-exchange &nbsp; Request Trade
+      button.btn.btn-default.btn-trade(ng-click="cancelTrade(book)", ng-if="isBookOwner(book)") Cancel Trade
    
