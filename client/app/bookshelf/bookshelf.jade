@@ -15,6 +15,7 @@ div.row
       i.fa.fa-times
     button.btn.btn-success(ng-click="tradeBook(book)" ng-show="!book.forTrade") Trade
     button.btn.btn-default(ng-click="cancelTrade(book)" ng-show="book.forTrade") Cancel Trade
+    button.btn.btn-default(ng-click="openBook(book)") Test
     //-button.btn.btn-default(ng-click="addBook(result)" ng-disabled="result.onShelf")
       //-span(ng-if="!result.onShelf") Add Book
       //-span(ng-if="result.onShelf") On Shelf

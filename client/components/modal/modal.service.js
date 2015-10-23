@@ -8,7 +8,8 @@ angular.module('bookbrokerApp')
      * @param  {String} modalClass - (optional) class(es) to be applied to the modal
      * @return {Object}            - the instance $modal.open() returns
      */
-    function openModal(scope, modalClass) {
+    function openModal(scope, modalClass, templateUrl, controllerName) {
+      controllerName = controllerName || '';
       var modalScope = $rootScope.$new();
       scope = scope || {};
       modalClass = modalClass || 'modal-default';
@@ -16,7 +17,8 @@ angular.module('bookbrokerApp')
       angular.extend(modalScope, scope);
 
       return $modal.open({
-        templateUrl: 'components/modal/modal.html',
+        templateUrl: templateUrl,
+        controller: controllerName,
         windowClass: modalClass,
         scope: modalScope
       });
@@ -65,13 +67,35 @@ angular.module('bookbrokerApp')
                   }
                 }]
               }
-            }, 'modal-danger');
+            }, 'modal-danger', 'components/modal/modal.html');
 
             deleteModal.result.then(function(event) {
               del.apply(event, args);
             });
           };
         }
+      },
+      singleBook: function (book) {
+          /**
+           * Open a single book view modal
+           * @param  {String} object   - book object 
+           */
+          return function() {
+            var args = Array.prototype.slice.call(arguments),
+                book = args.shift(),
+                bookModal;
+
+            bookModal = openModal({
+              book: book,
+              modal: {
+                dismissable: true,
+              }
+            }, 'modal-danger', 'app/books/book/book.html', 'BookCtrl');
+
+            bookModal.result.then(function(event) {
+              del.apply(event, args);
+            });
+          };
+        }
       }
-    };
   });

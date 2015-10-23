@@ -15,6 +15,8 @@ angular.module('bookbrokerApp')
       ioSocket: ioSocket
     });
 
+
+
     return {
       socket: socket,
 
@@ -60,7 +62,7 @@ angular.module('bookbrokerApp')
           cb(event, item, array);
         });
       },
-
+     
       /**
        * Removes listeners for a models updates on the socket
        *

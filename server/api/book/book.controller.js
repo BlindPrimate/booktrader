@@ -62,6 +62,27 @@ exports.search = function (req,res) {
   });
 }
 
+exports.searchSingle = function (req,res) {
+  request.get({
+    url: 'https://www.googleapis.com/books/v1/volumes/' + req.params.id,
+    json: true
+  }, function (error, response, body) {
+
+    Book.findOne({
+      owner_id: req.user.id,
+      googleId: body.googleId
+    }, function (err, book) {
+      if (book) {
+        _.extend(book, body.volumeInfo);
+        book.onShelf = true;
+      } else {
+        book = body.volumeInfo;
+        book.onShelf = false;
+      }
+      return res.status(201).json(book);
+    });
+  });
+}
 
 exports.bookshelf = function (req, res) {
   Book.find({owner_id: req.user.id}, function (err, shelf) {
@@ -92,7 +113,6 @@ exports.update = function(req, res) {
     });
   });
 };
-
 
 // Deletes a book from the DB.
 exports.destroy = function(req, res) {

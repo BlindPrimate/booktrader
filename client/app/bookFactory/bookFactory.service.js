@@ -15,6 +15,9 @@ angular.module('bookbrokerApp')
       searchBooks: function (searchTerm) {
         return $http.get(searchUrl + searchTerm);
       },
+      getSingleBook: function (bookId) {
+        return $http.get(bookUrl + 'google/' + bookId);
+      },
       saveBook: function (newBook) {
         return $http.post(bookshelfUrl,  newBook);
       },

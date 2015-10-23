@@ -12,6 +12,7 @@ router.get('/trades', auth.isAuthenticated(), controller.trades); // get current
 router.post('/bookshelf', auth.isAuthenticated(), controller.create);  // add book to bookshelf
 router.get('/:id', controller.show);                                  // get book by id
 router.get('/search/:term', auth.isAuthenticated(), controller.search); // search for books on google api
+router.get('/google/:id', auth.isAuthenticated(), controller.searchSingle); // search for books on google api
 router.put('/:id', controller.update);                                // modify books document
 router.patch('/:id', controller.update);
 router.delete('/:id', controller.destroy);

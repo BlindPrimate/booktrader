@@ -5,6 +5,9 @@ angular.module('bookbrokerApp')
     $scope.menu = [{
       'title': 'Home',
       'link': '/'
+    }, {
+      'title': 'Books',
+      'link': '/books'
     }];
 
     $scope.isCollapsed = true;

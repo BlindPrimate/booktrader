@@ -6,14 +6,14 @@ angular.module('bookbrokerApp')
       templateUrl: 'app/bookshelf/bookshelf.html',
       restrict: 'E',
       scope: {},
-      controller: function ($scope, bookFactory, socket) {
+      controller: function ($scope, bookFactory, socket, Modal) {
         var init = function () {
           $scope.bookhself = [];
         }
 
         $scope.removeBook = function (book) {
-          bookFactory.removeBook(book._id).then(function (books) {
-            $scope.bookshelf = books.data;
+          bookFactory.removeBook(book._id).then(function () {
+            $scope.bookshelf.splice($scope.bookshelf.indexOf(book), 1);
           });
         }
 
@@ -31,7 +31,13 @@ angular.module('bookbrokerApp')
 
         bookFactory.getUserBookshelf().then(function (results) {
           $scope.bookshelf = results.data;
-          //socket.syncUpdates('book', $scope.bookshelf);
+          socket.syncUpdates('book', $scope.bookshelf, function (event, array, item) {
+
+          });
+        });
+
+        $scope.openBook = Modal.singleBook(function () {
+            
         });
 
         init();
