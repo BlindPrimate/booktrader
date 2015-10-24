@@ -35,10 +35,10 @@ $fa-font-path: "/bower_components/font-awesome/fonts";
 @import 'account/login/login.scss';
 @import 'admin/admin.scss';
 @import 'books/books.scss';
-@import 'booksForTrade/booksForTrade.scss';
-@import 'bookshelf/bookshelf.scss';
+@import 'directives/booksForTrade/booksForTrade.scss';
+@import 'directives/bookshelf/bookshelf.scss';
+@import 'directives/newBook/newBook.scss';
+@import 'directives/pendingRequests/pendingRequests.scss';
 @import 'main/main.scss';
-@import 'newBook/newBook.scss';
-@import 'pendingRequests/pendingRequests.scss';
 @import 'modal/modal.scss';
 // endinjector

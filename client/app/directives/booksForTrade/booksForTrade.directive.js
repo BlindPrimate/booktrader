@@ -3,7 +3,7 @@
 angular.module('bookbrokerApp')
   .directive('booksForTrade', function () {
     return {
-      templateUrl: 'app/booksForTrade/booksForTrade.html',
+      templateUrl: 'app/directives/booksForTrade/booksForTrade.html',
       restrict: 'E',
       scope: {},
       controller: function ($scope, Auth, bookFactory){
