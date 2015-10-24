@@ -3,6 +3,11 @@
 var _ = require('lodash');
 var Trade = require('./trade.model');
 
+
+/*
+ * All trades
+ */
+
 // Get list of trades
 exports.index = function(req, res) {
   Trade.find(function (err, trades) {
@@ -20,8 +25,6 @@ exports.userTrades = function(req, res) {
     return res.status(200).json(trades);
   });
 };
-
-
 
 // Get a single trade
 exports.show = function(req, res) {
@@ -63,6 +66,45 @@ exports.destroy = function(req, res) {
       if(err) { return handleError(res, err); }
       return res.status(204).send('No Content');
     });
+  });
+};
+
+/*
+ * Pending Trades
+ */
+
+// Get list of trades
+exports.pendingIndex = function(req, res) {
+  Trade.find({tradeStatus: 'pending'}, function (err, trades) {
+    if(err) { return handleError(res, err); }
+    return res.status(200).json(trades);
+  });
+};
+
+
+/*
+ * Requested Trades
+ */
+
+// Get list of trades
+exports.requestedIndex = function(req, res) {
+  Trade.find({tradeStatus: 'requested'}, function (err, trades) {
+    if(err) { return handleError(res, err); }
+    return res.status(200).json(trades);
+  });
+};
+
+
+
+/*
+ * Completed Trades
+ */
+
+// Get list of trades
+exports.completedIndex = function(req, res) {
+  Trade.find({tradeStatus: 'completed'}, function (err, trades) {
+    if(err) { return handleError(res, err); }
+    return res.status(200).json(trades);
   });
 };
 

@@ -5,7 +5,9 @@ var mongoose = require('mongoose'),
 
 var TradeSchema = new Schema({
   owner_id: String,
-  tradedTo: String,
+  requester_id: String,
+  tradeStatus: {type: String, default: 'pending'},
+  dateCompleted: Date,
   title : String,
   authors : Array,
   thumbnail : String,

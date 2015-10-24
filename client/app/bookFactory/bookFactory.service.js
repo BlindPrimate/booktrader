@@ -14,8 +14,8 @@ angular.module('bookbrokerApp')
     // Public API here
     return {
       searchBooks: function (searchTerm) {
-        return $http.get(searchUrl + searchTerm).then(function (results) {
-          return results.data;
+        return $http.get(searchUrl + searchTerm).then(function (books) {
+          return books.data;
         });
       },
       getSingleBook: function (bookId) {
@@ -54,11 +54,27 @@ angular.module('bookbrokerApp')
       cancelTrade: function (bookId) {
         return $http.delete(tradeUrl + bookId);
       },
-      getTrades: function () {
-        return $http.get(tradeUrl);
+      getPendingTrades: function () {
+        return $http.get(tradeUrl + 'pending');
       },
       requestTrade: function (book) {
-        return $http.put();
+        return $http.put(tradeUrl + book._id, 
+            {
+              tradeStatus: 'requested',
+              requester_id: user
+            })
+            .then(function (trade) {
+              return trade.data;
+            });
+      },
+      confirmTradeRequest: function (book) {
+        return $http.put(tradeUrl + book._id, 
+            {
+              tradingStatus: 'completed',
+            })
+            .then(function (trade) {
+
+            });
       }
-    };
+    }
   });

@@ -20,7 +20,7 @@ angular.module('bookbrokerApp')
           }
         }
 
-        bookFactory.getTrades().then(function (results) {
+        bookFactory.getPendingTrades().then(function (results) {
           $scope.tradeShelf = results.data;
         });
 
