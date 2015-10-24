@@ -5,6 +5,47 @@ var Trade = require('./trade.model');
 
 
 /*
+ * User-specific Trades
+ */
+
+
+// Get list of trades by user id
+exports.userTrades = function(req, res) {
+  var userId = req.user.id;
+  Trade.find({
+    owner_id: userId
+  }, function (err, trades) {
+    if(err) { return handleError(res, err); }
+    return res.status(200).json(trades);
+  });
+};
+
+exports.completedTradesByUser = function(req, res) {
+  var userId = req.user.id;
+  Trade.find({
+        owner_id: userId,
+        tradeStatus: 'completed'
+  }, function (err, trades) {
+    if(err) { return handleError(res, err); }
+    return res.status(200).json(trades);
+  });
+};
+
+
+exports.tradeRequestsByUser = function(req, res) {
+  var userId = req.user.id;
+  Trade.find({
+    owner_id: userId,
+    tradeStatus: 'requested'
+  }, function (err, trades) {
+    console.log(trades);
+    if(err) { return handleError(res, err); }
+    return res.status(200).json(trades);
+  });
+};
+
+
+/*
  * All trades
  */
 
@@ -16,15 +57,7 @@ exports.index = function(req, res) {
   });
 };
 
-// Get list of trades by user id
-exports.userTrades = function(req, res) {
-  var userId = req.user.id;
-  Trade.find({owner_id: userId}, function (err, trades) {
-    console.log(trades);
-    if(err) { return handleError(res, err); }
-    return res.status(200).json(trades);
-  });
-};
+
 
 // Get a single trade
 exports.show = function(req, res) {

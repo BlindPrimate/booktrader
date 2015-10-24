@@ -8,7 +8,9 @@ var router = express.Router();
 
 
 // user-specific trades
-router.get('/user/:id', auth.isAuthenticated(), controller.userTrades);
+router.get('/me', auth.isAuthenticated(), controller.userTrades);
+router.get('/completed/me', auth.isAuthenticated(), controller.completedTradesByUser);
+router.get('/requested/me', auth.isAuthenticated(), controller.tradeRequestsByUser);
 
 // pending trades - no current user trade requests made
 router.get('/pending', controller.pendingIndex);
