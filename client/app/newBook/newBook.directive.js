@@ -16,7 +16,7 @@ angular.module('bookbrokerApp')
 
         $scope.$watch('search.term', function () {
           bookFactory.searchBooks('good omens').then(function (searchResult) {
-            $scope.search.results = searchResult.data;
+            $scope.search.results = searchResult;
           });
         });
 

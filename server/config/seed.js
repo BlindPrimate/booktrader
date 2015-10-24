@@ -8,6 +8,7 @@
 var Thing = require('../api/thing/thing.model');
 var User = require('../api/user/user.model');
 var Book = require('../api/book/book.model');
+var Trade = require('../api/trade/trade.model');
 
 Thing.find({}).remove(function() {
   Thing.create({
@@ -36,6 +37,9 @@ Book.find({}).remove(function () {
 
 });
 
+Trade.find({}).remove(function () {
+
+});
 
 
 User.find({}).remove(function() {

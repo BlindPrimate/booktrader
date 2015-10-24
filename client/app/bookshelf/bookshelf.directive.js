@@ -18,7 +18,7 @@ angular.module('bookbrokerApp')
         });
 
         $scope.tradeBook = function (book) {
-          bookFactory.tradeBook(book._id).then(function (results) {
+          bookFactory.tradeBook(book).then(function (results) {
             book.forTrade = true;
           });
         }
@@ -30,7 +30,7 @@ angular.module('bookbrokerApp')
         }
 
         bookFactory.getUserBookshelf().then(function (results) {
-          $scope.bookshelf = results.data;
+          $scope.bookshelf = results;
           socket.syncUpdates('book', $scope.bookshelf, function (event, array, item) {
 
           });

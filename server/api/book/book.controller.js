@@ -87,7 +87,7 @@ exports.searchSingle = function (req,res) {
 exports.bookshelf = function (req, res) {
   Book.find({owner_id: req.user.id}, function (err, shelf) {
     if(err) { return handleError(res, err); }
-    return res.status(201).json(shelf);
+    return res.status(200).json(shelf);
   });
 }
 

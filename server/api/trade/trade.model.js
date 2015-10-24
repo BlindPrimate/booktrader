@@ -3,8 +3,9 @@
 var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
-var BookSchema = new Schema({
+var TradeSchema = new Schema({
   owner_id: String,
+  tradedTo: String,
   title : String,
   authors : Array,
   thumbnail : String,
@@ -14,4 +15,4 @@ var BookSchema = new Schema({
   categories : Array,
 });
 
-module.exports = mongoose.model('Book', BookSchema);
+module.exports = mongoose.model('Trade', TradeSchema);
