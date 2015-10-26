@@ -24,7 +24,7 @@ exports.completedTradesByUser = function(req, res) {
   var userId = req.user.id;
   Trade.find({
         owner_id: userId,
-        tradeStatus: 'completed'
+        completed: true
   }, function (err, trades) {
     if(err) { return handleError(res, err); }
     return res.status(200).json(trades);
@@ -36,7 +36,7 @@ exports.tradeRequestsByUser = function(req, res) {
   var userId = req.user.id;
   Trade.find({
     owner_id: userId,
-    tradeStatus: 'requested'
+    requested: true
   }, function (err, trades) {
     console.log(trades);
     if(err) { return handleError(res, err); }
@@ -108,7 +108,7 @@ exports.destroy = function(req, res) {
 
 // Get list of trades
 exports.pendingIndex = function(req, res) {
-  Trade.find({tradeStatus: 'pending'}, function (err, trades) {
+  Trade.find({forTrade: true}, function (err, trades) {
     if(err) { return handleError(res, err); }
     return res.status(200).json(trades);
   });
@@ -121,7 +121,7 @@ exports.pendingIndex = function(req, res) {
 
 // Get list of trades
 exports.requestedIndex = function(req, res) {
-  Trade.find({tradeStatus: 'requested'}, function (err, trades) {
+  Trade.find({requested: true}, function (err, trades) {
     if(err) { return handleError(res, err); }
     return res.status(200).json(trades);
   });

@@ -60,7 +60,7 @@ angular.module('bookbrokerApp')
       requestTrade: function (book) {
         return $http.put(tradeUrl + book._id, 
             {
-              tradeStatus: 'requested',
+              requested: true,
               requester_id: user
             })
             .then(function (trade) {
@@ -70,11 +70,19 @@ angular.module('bookbrokerApp')
       confirmTradeRequest: function (book) {
         return $http.put(tradeUrl + book._id, 
             {
-              tradingStatus: 'completed',
+              forTrade: false,
+              completed: true,
+              dateCompleted: Date.now()
             })
             .then(function (trade) {
 
             });
+      },
+      getTradeRequests: function () {
+        return $http.get(tradeUrl + 'requested/me')
+          .then(function (books) {
+            return books.data;
+          });
       }
     }
   });

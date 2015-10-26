@@ -7,5 +7,10 @@ angular.module('bookbrokerApp')
         url: '/books',
         templateUrl: 'app/books/books.html',
         controller: 'BooksCtrl'
+      })
+      .state('book', {
+        url: '/books/:id',
+        templateUrl: 'app/books/book/book.html',
+        controller: 'BookCtrl'
       });
   });

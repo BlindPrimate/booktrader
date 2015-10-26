@@ -63,25 +63,43 @@ exports.search = function (req,res) {
 }
 
 exports.searchSingle = function (req,res) {
-  request.get({
-    url: 'https://www.googleapis.com/books/v1/volumes/' + req.params.id,
-    json: true
-  }, function (error, response, body) {
 
-    Book.findOne({
-      owner_id: req.user.id,
-      googleId: body.googleId
-    }, function (err, book) {
+  Book.findById(req.params.id, function (err, book) {
+    if(err) { return handleError(res, err); }
+    request.get({
+      url: 'https://www.googleapis.com/books/v1/volumes/' + book.googleId,
+      json: true
+    }, function (error, response, body) {
+      var compiledBook;
       if (book) {
-        _.extend(book, body.volumeInfo);
-        book.onShelf = true;
-      } else {
-        book = body.volumeInfo;
-        book.onShelf = false;
+        compiledBook = _.merge({}, body.volumeInfo, book);
+        compiledBook.description = compiledBook.description.replace(/<\/?[^>]+>/gi, '');
       }
-      return res.status(201).json(book);
+      return res.status(201).json(compiledBook);
     });
   });
+
+
+  //request.get({
+    //url: 'https://www.googleapis.com/books/v1/volumes/' + req.params.id,
+    //json: true
+  //}, function (error, response, body) {
+    //Book.findOne({
+      //owner_id: req.user.id,
+      //googleId: body.googleId
+    //}, function (err, book) {
+      //if (book) {
+        //_.extend(book, body.volumeInfo);
+        //book.onShelf = true;
+      //} else {
+        //book = body.volumeInfo;
+        //book.onShelf = false;
+         //strip html tags from description
+        //book.description = book.description.replace(/<\/?[^>]+>/gi, '');
+      //}
+      //return res.status(201).json(book);
+    //});
+  //});
 }
 
 exports.bookshelf = function (req, res) {

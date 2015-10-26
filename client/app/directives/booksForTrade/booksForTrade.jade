@@ -1,18 +1,4 @@
 h1 For Trade
 div.row
   h2(ng-hide="tradeShelf.length") No current trades
-  div.book(ng-repeat="book in tradeShelf")
-    img(src="{{book.thumbnail}}")
-    //-p {{book.title}}
-    //-p 
-      //-span(ng-repeat="author in book.authors") {{author}}{{$last? '' : ', '}}
-    //-p Published: {{book.datePublished | date: 'yyyy'}}
-    //-p 
-      //-span(ng-repeat="category in book.categories") {{category}} {{$last? '' : ', '}}
-    //-p
-      //-span(ng-repeat="isbn in book.industryIdentifiers") ISBN: {{isbn.identifier}} 
-    div.trade-buttons 
-      button.btn.btn-success.btn-trade(ng-click="requestTrade(book)" ng-if="!isBookOwner(book)")
-        i.fa.fa-exchange &nbsp; Request Trade
-      button.btn.btn-default.btn-trade(ng-click="cancelTrade(book)", ng-if="isBookOwner(book)") Cancel Trade
-   
+  book.book(ng-repeat="book in tradeShelf")

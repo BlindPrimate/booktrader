@@ -12,6 +12,11 @@ angular.module('bookbrokerApp')
         }
 
 
+        bookFactory.getTradeRequests().then(function (books) {
+          $scope.trades = books;
+        });
+
+
 
         init();
       },

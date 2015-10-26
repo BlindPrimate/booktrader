@@ -75,27 +75,5 @@ angular.module('bookbrokerApp')
           };
         }
       },
-      singleBook: function (book) {
-          /**
-           * Open a single book view modal
-           * @param  {String} object   - book object 
-           */
-          return function() {
-            var args = Array.prototype.slice.call(arguments),
-                book = args.shift(),
-                bookModal;
-
-            bookModal = openModal({
-              book: book,
-              modal: {
-                dismissable: true,
-              }
-            }, 'modal-danger', 'app/books/book/book.html', 'BookCtrl');
-
-            bookModal.result.then(function(event) {
-              del.apply(event, args);
-            });
-          };
-        }
-      }
+    }
   });
