@@ -46,7 +46,7 @@ exports.search = function (req,res) {
 
     async.map(books, function (book, callback) {
       Book.findOne({
-        owner_id: req.user.id,
+        owner: req.user.id,
         googleId: book.googleId
       }, function (err, user) {
         if (user) {
@@ -64,46 +64,23 @@ exports.search = function (req,res) {
 
 exports.searchSingle = function (req,res) {
 
-  Book.findById(req.params.id, function (err, book) {
+  Book.findOne({_id: req.params.id}, function (err, book) {
     if(err) { return handleError(res, err); }
+    if(!book) { return res.status(404).send('Not Found'); }
     request.get({
       url: 'https://www.googleapis.com/books/v1/volumes/' + book.googleId,
       json: true
     }, function (error, response, body) {
-      var compiledBook;
-      if (book) {
-        compiledBook = _.merge({}, body.volumeInfo, book);
-        compiledBook.description = compiledBook.description.replace(/<\/?[^>]+>/gi, '');
-      }
-      return res.status(201).json(compiledBook);
+      var compiled = book.toObject();
+      _.merge(compiled, body.volumeInfo);
+      compiled.description = compiled.description.replace(/<\/?[^>]+>/gi, '');
+      return res.status(201).json(compiled);
     });
   });
-
-
-  //request.get({
-    //url: 'https://www.googleapis.com/books/v1/volumes/' + req.params.id,
-    //json: true
-  //}, function (error, response, body) {
-    //Book.findOne({
-      //owner_id: req.user.id,
-      //googleId: body.googleId
-    //}, function (err, book) {
-      //if (book) {
-        //_.extend(book, body.volumeInfo);
-        //book.onShelf = true;
-      //} else {
-        //book = body.volumeInfo;
-        //book.onShelf = false;
-         //strip html tags from description
-        //book.description = book.description.replace(/<\/?[^>]+>/gi, '');
-      //}
-      //return res.status(201).json(book);
-    //});
-  //});
 }
 
 exports.bookshelf = function (req, res) {
-  Book.find({owner_id: req.user.id}, function (err, shelf) {
+  Book.find({owner: req.user.id}, function (err, shelf) {
     if(err) { return handleError(res, err); }
     return res.status(200).json(shelf);
   });
@@ -111,7 +88,7 @@ exports.bookshelf = function (req, res) {
 
 // Creates a new book in the DB.
 exports.create = function(req, res) {
-  req.body.owner_id = req.user.id;
+  req.body.owner = req.user.id;
   Book.create(req.body, function(err, book) {
     if(err) { return handleError(res, err); }
     return res.status(201).json(book);

@@ -1,7 +1,27 @@
 'use strict';
 
 angular.module('bookbrokerApp')
-  .controller('BookCtrl', function ($scope, $stateParams, bookFactory, Modal) {
+  .controller('BookCtrl', function ($scope, $stateParams, bookFactory, Modal, Auth) {
+
+    var init = function () {
+
+    }
+
+    $scope.isBookOwner = function (book) {
+      if (book.owner_id === Auth.getCurrentUser()._id) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+
+    $scope.isBookRequester = function (book) {
+      if (book.requester_id === Auth.getCurrentUser()._id) {
+        return true;
+      } else {
+        return false;
+      }
+    }
 
     bookFactory.getSingleBook($stateParams.id).then(function (bookData) {
       $scope.book = bookData;
@@ -21,7 +41,7 @@ angular.module('bookbrokerApp')
     
     $scope.cancelTrade = function (book) {
       bookFactory.cancelTrade(book._id).then(function (results) {
-        $scope.tradeShelf.splice($scope.tradeShelf.indexOf(results), 1)
+        book.forTrade = false;
       });
     }
 
@@ -31,6 +51,6 @@ angular.module('bookbrokerApp')
       });
     }
 
-
+    init();
 
   });

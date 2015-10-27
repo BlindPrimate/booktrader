@@ -6,16 +6,6 @@ var crypto = require('crypto');
 var authTypes = ['github', 'twitter', 'facebook', 'google'];
 
 
-var bookshelfSchema = new Schema({
-  title : String,
-  authors : Array,
-  thumbnail : String,
-  googleId : String,
-  isbn : Array,
-  datePublished : Date,
-  categories : Array
-});
-
 
 
 var UserSchema = new Schema({
@@ -25,7 +15,7 @@ var UserSchema = new Schema({
     type: String,
     default: 'user'
   },
-  bookshelf: [bookshelfSchema],
+  bookshelf: [{type: mongoose.Schema.ObjectId, ref: 'Book'}],
   hashedPassword: String,
   provider: String,
   salt: String,

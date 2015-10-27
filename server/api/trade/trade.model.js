@@ -2,21 +2,15 @@
 
 var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
+var Book = require('../book/book.model');
 
 var TradeSchema = new Schema({
-  owner_id: String,
-  requester_id: String,
-  requested: {type: Boolean, default: false},
-  forTrade: {type: Boolean, default: true},
-  completed: {type: Boolean, default: false},
+  owner: mongoose.Schema.ObjectId,
+  requester: mongoose.Schema.ObjectId,
   dateCompleted: Date,
-  title : String,
-  authors : Array,
-  thumbnail : String,
-  googleId : String,
-  isbn : Array,
-  datePublished : Date,
-  categories : Array,
+  bookData: {type: mongoose.Schema.ObjectId, ref: 'Book'}
 });
+
+
 
 module.exports = mongoose.model('Trade', TradeSchema);

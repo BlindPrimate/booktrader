@@ -37,7 +37,6 @@ exports.create = function (req, res, next) {
 
 
 
-
 /**
  * Get a single user
  */

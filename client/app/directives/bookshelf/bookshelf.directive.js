@@ -36,9 +36,6 @@ angular.module('bookbrokerApp')
           });
         });
 
-        $scope.openBook = Modal.singleBook(function () {
-            
-        });
 
         init();
       },

@@ -1,0 +1,10 @@
+book {
+  position: relative;
+  float: left;
+  margin: 10px;
+  .remove-book {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+  }
+}

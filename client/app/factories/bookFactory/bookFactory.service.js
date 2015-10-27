@@ -32,21 +32,24 @@ angular.module('bookbrokerApp')
         return $http.delete(bookUrl + bookId);
       },
       getUserBookshelf: function () {
-        return $q.all({
-            bookshelf: $http.get(bookshelfUrl),
-            trades: $http.get(tradeUrl + 'me')
-        }).then(function (results) {
-          var bookshelf = _.map(results.bookshelf.data, function (book) {
-            var tradeEntry = _.find(results.trades.data, {'googleId': book.googleId });
-            if (tradeEntry) {
-              book.forTrade = true;
-            } else {
-              book.forTrade = false;
-            }
-            return book;
-          });
-          return bookshelf;
+        //return $q.all({
+            //bookshelf: $http.get(bookshelfUrl),
+            //trades: $http.get(tradeUrl + 'me')
+        //}).then(function (results) {
+          //var bookshelf = _.map(results.bookshelf.data, function (book) {
+            //var tradeEntry = _.find(results.trades.data, {'googleId': book.googleId });
+            //if (tradeEntry) {
+              //book.forTrade = true;
+            //} else {
+              //book.forTrade = false;
+            //}
+            //return book;
+          //});
+        return $http.get(bookshelfUrl).then(function (books) {
+          return books.data;
         });
+          //return bookshelf;
+        //});
       },
       tradeBook: function (book) {
         return $http.post(tradeUrl, book);
@@ -61,7 +64,7 @@ angular.module('bookbrokerApp')
         return $http.put(tradeUrl + book._id, 
             {
               requested: true,
-              requester_id: user
+              requester: user
             })
             .then(function (trade) {
               return trade.data;

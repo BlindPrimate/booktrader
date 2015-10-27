@@ -1,0 +1,4 @@
+//-p {{book}}
+img(src="{{book.thumbnail}}" ng-click="openBook(book)")
+button.remove-book.btn.btn-default(ng-click="removeBook(book.title, book)")
+  i.fa.fa-times
