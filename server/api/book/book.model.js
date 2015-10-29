@@ -4,6 +4,7 @@ var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
 var User = require('../user/user.model');
+var Trade = require('../trade/trade.model');
 
 
 
@@ -16,16 +17,31 @@ var BookSchema = new Schema({
   isbn : Array,
   datePublished : Date,
   categories : Array,
-  tradeData: {
-    requested: {type: Boolean, default: false},
-    forTrade: {type: Boolean, default: false},
-    completed: {type: Boolean, default: false},
-  }
+  requester: {type: mongoose.Schema.ObjectId, ref: 'User'},
+  requested: {type: Boolean, default: false},
+  forTrade: {type: Boolean, default: false},
+  completed: {type: Boolean, default: false},
 });
 
 
 BookSchema.pre('save', function (next) {
   var Book = this;
+
+
+  // if book trade is completed create new trade document in trade db
+  if (Book.completed) {
+    Trade.create({
+      owner: Book.owner,
+      requester: Book.requester,
+      dateCompleted: Date.now(),
+      bookData: Book._id,
+    }, function (err, completedTrade) {
+      completedTrade.save();
+    });
+    Book.completed = false;
+    Book.requester = null;
+  }
+
   User.findById(this.owner, function (err, user) {
     if (!user) {
       next(this);

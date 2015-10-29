@@ -15,7 +15,6 @@ angular.module('bookbrokerApp')
       password: 'userB'
     }
     $scope.testLogin = function (user) {
-      console.log(user.email, user.password);
       Auth.login({
         email: user.email,
         password: user.password

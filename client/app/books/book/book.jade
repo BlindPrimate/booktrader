@@ -1,18 +1,18 @@
 div(ng-include='"components/navbar/navbar.html"')
 div.col-lg-10.col-lg-offset-1.col-md-10.col-md-offset-1.col-sm-12
-  p {{book}}
-  p forTrade: {{book.tradeData.forTrade}}
-  p requested: {{book.tradeData.requested}}
+  //-p {{book}}
+  //-p forTrade: {{book.trade.forTrade}}
+  //-p requested: {{book.trade.requested}}
   div.trade-buttons.pull-right
-    //-button.btn.btn-success.btn-trade(ng-click="tradeBook(book)" ng-show="book.forTrade") Trade
-    button.btn.btn-success.btn-trade(ng-click="tradeBook(book)") Trade
-    //-button.btn.btn-default.btn-trade(ng-click="cancelTrade(book)" ng-show="book.forTrade && isBookOwner(book)") Cancel Trade
-    button.btn.btn-default.btn-trade(ng-click="cancelTrade(book)") Cancel Trade
-    //-button.btn.btn-success.btn-trade(ng-click="requestTrade(book)" ng-show="book.forTrade && !isBookOwner(book)") 
-    button.btn.btn-success.btn-trade(ng-click="requestTrade(book)") 
+    button.btn.btn-success.btn-trade(ng-click="tradeBook(book)" ng-show="!book.forTrade && isBookOwner(book) && !book.trade.requested") Trade
+    //-button.btn.btn-success.btn-trade(ng-click="tradeBook(book)") Trade
+    button.btn.btn-default.btn-trade(ng-click="cancelTrade(book)" ng-show="book.forTrade && isBookOwner(book)") Cancel Trade
+    //-button.btn.btn-default.btn-trade(ng-click="cancelTrade(book)") Cancel Trade
+    button.btn.btn-success.btn-trade(ng-click="requestTrade(book)" ng-show="book.forTrade && !isBookOwner(book)") 
       i.fa.fa-exchange &nbsp; Request Trade
-    button.btn.btn-success.btn-trade(ng-click="acceptTrade(book)") Approve Trade Request
-    button.btn.btn-success.btn-trade(ng-click="acceptTrade(book)") Cancel Request
+    button.btn.btn-success.btn-trade(ng-click="acceptTrade(book)" ng-show="book.requested && isBookOwner(book)") Approve Trade Request
+    //-button.btn.btn-success.btn-trade(ng-click="acceptTrade(book)") Approve Trade Request
+    button.btn.btn-success.btn-trade(ng-click="cancel(book)" ng-show="book.requested && isBookRequester(book)") Cancel Request
   h1 {{book.title}}  
   img(src="{{book.imageLinks.small}}")
   p {{book.publishedDate}}

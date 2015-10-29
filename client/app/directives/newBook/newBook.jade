@@ -4,14 +4,14 @@ form(name="newBookSearch")
   ul.list-group
     li.list-group-item(ng-repeat="result in search.results")
       img(src="{{result.imageLinks.thumbnail}}")
-      p {{result.title}}
-      p 
-        span(ng-repeat="author in result.authors") {{author}}{{$last? '' : ', '}}
-      p Published: {{result.publishedDate | date: 'yyyy'}}
-      p 
-        span(ng-repeat="category in result.categories") {{category}} {{$last? '' : ', '}}
-      p
-        span(ng-repeat="isbn in result.industryIdentifiers") ISBN: {{isbn.identifier}} 
+      //-p {{result.title}}
+      //-p 
+        //-span(ng-repeat="author in result.authors") {{author}}{{$last? '' : ', '}}
+      //-p Published: {{result.publishedDate | date: 'yyyy'}}
+      //-p 
+        //-span(ng-repeat="category in result.categories") {{category}} {{$last? '' : ', '}}
+      //-p
+        //-span(ng-repeat="isbn in result.industryIdentifiers") ISBN: {{isbn.identifier}} 
       button.btn.btn-default(ng-click="addBook(result)" ng-disabled="result.onShelf")
         span(ng-if="!result.onShelf") Add Book
         span(ng-if="result.onShelf") On Shelf

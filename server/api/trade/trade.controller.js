@@ -13,7 +13,7 @@ var Trade = require('./trade.model');
 exports.userTrades = function(req, res) {
   var userId = req.user.id;
   Trade.find({
-    owner_id: userId
+    owner: userId
   }, function (err, trades) {
     if(err) { return handleError(res, err); }
     return res.status(200).json(trades);
@@ -23,7 +23,7 @@ exports.userTrades = function(req, res) {
 exports.completedTradesByUser = function(req, res) {
   var userId = req.user.id;
   Trade.find({
-        owner_id: userId,
+        owner: userId,
         completed: true
   }, function (err, trades) {
     if(err) { return handleError(res, err); }
@@ -35,7 +35,7 @@ exports.completedTradesByUser = function(req, res) {
 exports.tradeRequestsByUser = function(req, res) {
   var userId = req.user.id;
   Trade.find({
-    owner_id: userId,
+    owner: userId,
     requested: true
   }, function (err, trades) {
     console.log(trades);

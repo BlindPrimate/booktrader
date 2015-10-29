@@ -22,6 +22,17 @@ exports.trades = function(req, res) {
   });
 };
 
+// Get list of trade requests for user
+exports.requests = function(req, res) {
+  Book.find({
+    owner: req.user.id,
+    requested: true,
+  }, function (err, books) {
+    if(err) { return handleError(res, err); }
+    return res.status(200).json(books);
+  });
+};
+
 // Get a single book
 exports.show = function(req, res) {
   Book.findById(req.params.id, function (err, book) {
@@ -63,7 +74,6 @@ exports.search = function (req,res) {
 }
 
 exports.searchSingle = function (req,res) {
-
   Book.findOne({_id: req.params.id}, function (err, book) {
     if(err) { return handleError(res, err); }
     if(!book) { return res.status(404).send('Not Found'); }

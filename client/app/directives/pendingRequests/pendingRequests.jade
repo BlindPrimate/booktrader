@@ -1,3 +1,4 @@
 h1 Pending Requests
-p {{trades}}
-
+div.row
+  h2(ng-hide="trades.length") No pending requests
+  book.book(ng-repeat="book in trades")

@@ -28,41 +28,29 @@ angular.module('bookbrokerApp')
           return savedBook.data;
         });
       },
-      removeBook: function (bookId) {
-        return $http.delete(bookUrl + bookId);
+      removeBook: function (book) {
+        return $http.delete(bookUrl + book._id);
       },
       getUserBookshelf: function () {
-        //return $q.all({
-            //bookshelf: $http.get(bookshelfUrl),
-            //trades: $http.get(tradeUrl + 'me')
-        //}).then(function (results) {
-          //var bookshelf = _.map(results.bookshelf.data, function (book) {
-            //var tradeEntry = _.find(results.trades.data, {'googleId': book.googleId });
-            //if (tradeEntry) {
-              //book.forTrade = true;
-            //} else {
-              //book.forTrade = false;
-            //}
-            //return book;
-          //});
         return $http.get(bookshelfUrl).then(function (books) {
           return books.data;
         });
-          //return bookshelf;
-        //});
       },
       tradeBook: function (book) {
-        return $http.post(tradeUrl, book);
+        return $http.put(bookUrl + book._id, {
+          forTrade: true,
+        });
       },
-      cancelTrade: function (bookId) {
-        return $http.delete(tradeUrl + bookId);
+      cancelTrade: function (book) {
+        return $http.put(bookUrl + book._id, {
+          forTrade: false,
+        });
       },
       getPendingTrades: function () {
-        return $http.get(tradeUrl + 'pending');
+        return $http.get(bookUrl + 'trades');
       },
       requestTrade: function (book) {
-        return $http.put(tradeUrl + book._id, 
-            {
+        return $http.put(bookUrl + book._id, {
               requested: true,
               requester: user
             })
@@ -70,19 +58,19 @@ angular.module('bookbrokerApp')
               return trade.data;
             });
       },
-      confirmTradeRequest: function (book) {
-        return $http.put(tradeUrl + book._id, 
-            {
+      acceptTradeRequest: function (book) {
+        return $http.put(bookUrl + book._id, {
+              owner: book.requester,
+              requested: false,
               forTrade: false,
               completed: true,
-              dateCompleted: Date.now()
             })
             .then(function (trade) {
-
+              return trade.data;
             });
       },
       getTradeRequests: function () {
-        return $http.get(tradeUrl + 'requested/me')
+        return $http.get(bookUrl + 'pendingrequests')
           .then(function (books) {
             return books.data;
           });
